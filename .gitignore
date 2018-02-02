@@ -1,0 +1,16 @@
+*.aux
+*.bbl
+*.log
+*.blg
+*.toc
+*.gz
+*.svg
+images/*.svg
+images/*.png
+/*.pdf
+*.out
+*.xml
+main-blx.bib
+Bibliografia/*
+generated_bpmn/*.bpmn
+generated_bpmn/*.svg

@@ -1,0 +1,12 @@
+Order,Activity,Condition,Who,Subprocess,Terminated
+0,start,,,,
+1,Notify Mpoo ,,,,
+2,Announce Mpoo ,,,,
+3,Perform Final Reading ,,,,
+4,Dismount Old Equipment ,,,,
+5,Mount New Device ,,,,
+6,Read Meter Count ,,,,
+7,Sents Values ,,,,
+8,Tell Go ,,,,
+9,Notify Msp ,,,,
+10,,,,,yes

@@ -1,0 +1,124 @@
+\documentclass[11pt]{aghdpl}
+\usepackage[english,polish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{csquotes}
+\usepackage{enumerate}
+\usepackage{courier}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{float}
+\usepackage[pdfborder={0 0 0 [3 3]}]{hyperref}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{multirow}
+\usepackage{caption}
+\usepackage{newfloat}
+\usepackage{csvsimple}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage[breakable]{tcolorbox}
+\usepackage{capt-of}
+\usepackage{rotating}
+
+\DeclareFloatingEnvironment[fileext=htx,placement={!ht},name=Text]{textdesc}
+
+\lstloadlanguages{TeX}
+
+\lstset{
+	literate={ą}{{\k{a}}}1
+	{ć}{{\'c}}1
+	{ę}{{\k{e}}}1
+	{ó}{{\'o}}1
+	{ń}{{\'n}}1
+	{ł}{{\l{}}}1
+	{ś}{{\'s}}1
+	{ź}{{\'z}}1
+	{ż}{{\.z}}1
+	{Ą}{{\k{A}}}1
+	{Ć}{{\'C}}1
+	{Ę}{{\k{E}}}1
+	{Ó}{{\'O}}1
+	{Ń}{{\'N}}1
+	{Ł}{{\L{}}}1
+	{Ś}{{\'S}}1
+	{Ź}{{\'Z}}1
+	{Ż}{{\.Z}}1,
+	basicstyle=\footnotesize\ttfamily,
+}
+
+\usetikzlibrary{arrows, automata, backgrounds, calendar, chains, matrix, mindmap, patterns, petri, shadows, shapes.geometric, shapes.misc, spy, trees}
+\tikzset{
+	%Define standard arrow tip
+	>=stealth',
+	%Define style for boxes
+	punkt/.style={
+		rectangle,
+		rounded corners,
+		draw=black, very thick,
+		text width=6.5em,
+		minimum height=2em,
+		text centered},
+	% Define arrow style
+	pil/.style={
+		->,
+		thick,
+		shorten <=2pt,
+		shorten >=2pt,}
+}
+
+%---------------------------------------------------------------------------
+
+\author{Krzysztof Honkisz}
+\shortauthor{K. Honkisz}
+
+\titlePL{Generowanie modeli BPMN na podstawie opisu w języku naturalnym}
+\titleEN{Generation of BPMN Process Models from Natural Language Description}
+
+\shorttitlePL{Generowanie modeli BPMN na podstawie opisu w języku naturalnym} 
+\shorttitleEN{Generation of BPMN Process Models from Natural Language Description}
+
+\thesistype{Praca dyplomowa magisterska}
+
+\supervisor{Dr inż. Krzysztof Kluza}
+
+\degreeprogramme{Informatyka}
+
+\date{2017}
+
+\department{Katedra Informatyki Stosowanej}
+
+\faculty{Wydział Elektrotechniki, Automatyki, \protect\\[-1mm] Informatyki i Inżynierii Biomedycznej}
+
+\acknowledgements{Serdecznie dziękuję za współpracę oraz wsparcie merytoryczne udzielone przez mojego promotora, dr Krzysztofa Kluzę, podczas pisania niniejszej pracy. Dodatkowo, kieruję podziękowania dla całej rodziny za pomoc udzieloną w okresie moich studiów.}
+
+
+\setlength{\cftsecnumwidth}{10mm}
+
+%---------------------------------------------------------------------------
+\setcounter{secnumdepth}{4}
+
+\begin{document}
+\selectlanguage{english}
+
+\titlepages
+\setcounter{tocdepth}{3}
+\tableofcontents
+\clearpage
+
+\include{introduction}
+\include{background}
+\include{implementation}
+\include{validation}
+\include{conclusion}
+
+\bibliography{bibliografia}
+
+\appendix
+\include{detailed-results}
+\include{dependencies-list}
+\include{keywords-list}
+\include{bpmn-python}
+%\include{listings}
+
+\end{document}

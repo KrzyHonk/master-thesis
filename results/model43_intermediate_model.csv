@@ -1,0 +1,11 @@
+Order,Activity,Condition,Who,Subprocess,Terminated
+0,start,,,,
+1,Request Measurements ,,,,
+2,Check Received Request ,,,,
+3,Deny Request ,,,,
+4,Perform Measurement ,,,,
+5,Inform Go ,,,,
+6,Transmit Measured Values ,,,,
+7,Process Measured Values ,,,,
+8,Transmit Readings ,,,,
+9,,,,,yes

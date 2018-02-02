@@ -1,0 +1,17 @@
+Order,Activity,Condition,Who,Subprocess,Terminated
+0,start,,,,
+1,Determine First Step ,,,,
+2,Buy Details ,,,,
+3,Participate Exhibitions ,,Our Marketing Staff ,,
+4,Happen ,,,,
+5,Start ,,,,
+6,Determine Contact Person ,,,,
+7,Would Project ,,,,
+8a1,Leave Him ,This is not case ,,,
+8b1,Try Head ,Potential Project Budget is huge ,,,
+8c1,Give It ,Next Step is detailed online presentation ,,,
+9,Wait ,,,,
+10,Come Customer ,,Customer ,,
+11a1,Call Customer ,We are not contacted ,,,
+11b1,goto 12,else,,,
+12,,,,,yes

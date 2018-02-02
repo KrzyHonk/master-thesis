@@ -1,0 +1,7 @@
+Order,Activity,Condition,Who,Subprocess,Terminated
+0,start,,,,
+1,Sents Dismissal ,,,,
+2,Review Dismissal ,,,,
+3,Reject Dismissal ,,,,
+4,Rms Dismissal ,,Mspo Con ,,
+5,,,,,yes

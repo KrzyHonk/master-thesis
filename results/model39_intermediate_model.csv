@@ -1,0 +1,11 @@
+Order,Activity,Condition,Who,Subprocess,Terminated
+0,start,,,,
+1,Register Measurement ,,,,
+2,Examine Application ,,,,
+3,Reject Application ,,,,
+4,Confirm Application ,,,,
+5,Assign Mspn ,,,,
+6,Inform Mspo ,,,,
+7,Inform Mpo ,,,,
+8,Inform Sp ,,,,
+9,,,,,yes

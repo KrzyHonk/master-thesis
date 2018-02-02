@@ -1,0 +1,10 @@
+Order,Activity,Condition,Who,Subprocess,Terminated
+0,start,,,,
+1,Cause Change ,,,,
+2,Review Change Request ,,,,
+3,Reject Change ,,,,
+4,Confirm Request ,,,,
+5,Perform Measuring Point Change ,,,,
+6,Report Implementation ,,,,
+7,Notify Sp/pu/go ,,,,
+8,,,,,yes

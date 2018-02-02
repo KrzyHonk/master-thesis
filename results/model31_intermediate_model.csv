@@ -1,0 +1,12 @@
+Order,Activity,Condition,Who,Subprocess,Terminated
+0,start,,,,
+1,Receive Expense Report ,,,,
+2,Create New Account ,,,,
+3a1,Review Report ,Employee does not have one ,Employee ,,
+3b1,goto 8,else,,,
+4,Approve Amounts ,,,,
+5,Require Approval ,,,,
+6,Receive Rejection Notice ,,Employee ,,
+7a1,Receive Approval ,Request is not completed ,,,
+7b1,goto 8,else,,,
+8,,,,,yes

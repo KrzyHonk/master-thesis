@@ -1,0 +1,5 @@
+Order,Activity,Condition,Who,Subprocess,Terminated
+0,start,,,,
+1,Ship Bicycle ,,Sales Department ,,
+2,Finish Process Instance ,,Sales Department ,,
+3,,,,,yes

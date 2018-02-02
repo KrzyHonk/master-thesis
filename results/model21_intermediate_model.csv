@@ -1,0 +1,16 @@
+Order,Activity,Condition,Who,Subprocess,Terminated
+0,start,,,,
+1,Get New Order ,,,,
+2,Determine Necessary Parts ,,,,
+3,Enter ,,,,
+4,Optimize Our Production Processes ,,,,
+5,Create Uniform Work Packages ,,,,
+6,Minimize Setup Times ,,,,
+7,Create List ,,,,
+8,Transfer Data ,,Data ,,
+9a1,Procure Parts ,Parts are missing ,,,
+9b1,Schedule Production ,This is not necessary ,,,
+10,Receive Notice ,,,,
+11,Take Care ,,Employee ,,
+12,Check Order ,,Order ,,
+13,,,,,yes

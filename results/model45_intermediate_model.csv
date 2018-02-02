@@ -1,0 +1,7 @@
+Order,Activity,Condition,Who,Subprocess,Terminated
+0,start,,,,
+1,Transmit Data Request ,,,,
+2,Data Transaction ,,,,
+3,Check Request ,,,,
+4,Answer Question ,,,,
+5,,,,,yes

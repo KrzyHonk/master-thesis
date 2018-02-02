@@ -1,0 +1,5 @@
+Order,Activity,Condition,Who,Subprocess,Terminated
+0,start,,,,
+1,Receive Order ,,Sales Department ,,
+2,Create Process Instance ,,,,
+3,,,,,yes

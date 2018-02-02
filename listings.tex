@@ -1,0 +1,245 @@
+\chapter{Code listings}
+\label{cha:listings}
+\section{Participant extraction}
+\begin{lstlisting}[language=Python, caption={Participant extraction function listing}, label={lst:participant_extraction}]
+def extract_participants(sentence) -> List[Participant]:
+  tmp_output = []
+  output = []
+  for word in sentence:
+    if word.dep_ in ("nsubj", "nsubjpass"):
+      participant = Participant(participant_token=word)
+      if word.pos_ == "pron":
+        participant.set_pronoun(True)
+      tmp_output.append(participant)
+    elif word.dep_ == "agent":
+      for child in word.children:
+        if child.dep_ == "pobj":
+          participant = Participant(participant_token=child)
+          if child.pos_ == "pron":
+            participant.set_pronoun(True)
+          tmp_output.append(participant)
+  
+  # Check if possible participant is a part of conjunction
+  for word in sentence:
+    if word.dep_ == "conj":
+      for child in word.children:
+      if child.dep_ in ("pobj", "dobj", "iobj", "attr"):
+        participant = Participant(participant_token=child)
+        if child.pos_ == "pron":
+          participant.set_pronoun(True)
+        tmp_output.append(participant)
+  
+  # Check if Participant is an acceptable entity
+  for participant in tmp_output:
+    participant_text = participant.get_participant_token().text
+    
+    insert_flag = False
+    # Check whether participant is a pronoun
+    if participant.is_pronoun():
+      insert_flag = True
+    
+    if insert_flag is False:
+    # Analyze participant hypernyms, in search for one of base keywords
+      insert_flag = analyze_participants_hypernyms(participant_text,
+      participants_hypernyms)
+    
+    if insert_flag is False:
+      # Check if participant is one of keywords
+      insert_flag = validate_participant(participant_text,
+      participant_keywords_list)
+    if insert_flag:
+      output.append(participant)
+  
+  return output
+\end{lstlisting}
+
+\section{Subject-verb-object extraction}
+\begin{lstlisting}[language=Python, caption={Subject-Verb-Object extraction function listing}, label={lst:svo_extraction}]
+def extract_svo_constructs(sentence: Span,
+participants: List[Participant]) -> List[SvoConstruct]:
+  tmp_output = []
+  root = sentence.root
+  nsubj_list = dep.find_tokens_with_dependencies(root, ["nsubj"])
+  nsubjpass_list = dep.find_tokens_with_dependencies(root, ["nsubjpass"])
+  if len(nsubj_list) > 0:
+    for token in nsubj_list:
+      subject = token
+      verb = subject.head
+      output_obj = find_token_in_ancestors(verb,
+      ("dobj", "iobj", "pobj", "attr"))
+      if subject is not None and verb is not None:
+        svo = SvoConstruct(subject=subject, 
+          verb=verb, new_object=output_obj, position=verb.i)
+        if len(tmp_output) > 0:
+          if check_if_svo_is_unique(svo, tmp_output):
+            tmp_output.append(svo)
+        else:
+          tmp_output.append(svo)
+    
+  if len(nsubjpass_list) > 0:
+    for token in nsubjpass_list:
+      subject = token
+      verb = subject.head
+      if subject is not None and verb is not None:
+        svo = SvoConstruct(subject=subject, 
+          verb=verb, position=verb.i)
+        if len(tmp_output) > 0:
+          if check_if_svo_is_unique(svo, tmp_output):
+            tmp_output.append(svo)
+        else:
+        tmp_output.append(svo)
+  
+  # Check if conjunction exists in sentence and extract possible SVO
+  for word in sentence:
+    if word.dep_ == "conj" and word.pos_ == "VERB" is not None:
+      output_obj = find_token_in_ancestors(token,
+        ("dobj", "iobj", "pobj", "attr"))
+      subject = find_subject_for_conjunction(token)
+      
+      if subject is not None 
+        and token is not None 
+        and output_obj is not None:
+        svo = SvoConstruct(subject=subject, verb=token, 
+          new_object=output_obj, position=token.i)
+        if len(tmp_output) > 0:
+          if check_if_svo_is_unique(svo, tmp_output):
+            tmp_output.append(svo)
+        else:
+          tmp_output.append(svo)
+  
+  # Check if extracted svo can be assigned to verified participant
+  assign_svo_to_participant(tmp_output, participants)
+  return tmp_output
+\end{lstlisting}
+
+\section{Gateway keywords search}
+\begin{lstlisting}[language=Python, caption={Gateway keywords search function listing}, label={lst:gateway_extraction}]
+def find_gateway_keywords(document, svos):
+     for sentence in doc.sents:
+    for word in sentence:
+      if word.text in gateways_keywords:
+        ancestor = word.head
+        svo = get_svo_by_ancestor(ancestor, svos)
+        if svo is not None:
+          svo.set_gateway_keyword(word.text)
+\end{lstlisting}
+
+\section{Intermediate process model generation}
+\begin{lstlisting}[language=Python, caption={Intermediate process model generation function listing}, label={lst:intermediate_model_generation}]
+def generate_intermediate_model(doc: Doc, filename: str, output_directory: str):
+  # elements extraction phase
+  participants, svos = extract_elements_from_document(doc)
+  
+  # semantic analysis - find possible gateway relations
+  gateways.find_gateway_keywords(doc, svos)
+  
+  # sort SVO in ascending order by position in sentence
+  sort_svos_by_position(svos)
+  
+  # generate intermediate diagram model
+  conditional_gateway_started = False
+  parallel_gateway_started = False
+  gateway_branch_index = 0
+  
+  with open(output_directory + filename + "_intermediate_model", "w") as file:
+    order = 0
+    add_header_and_start_activity(file)
+    
+    while svos:
+      svo, svos = get_head_from_list(svos)
+      # check if this svo is a part of conditional gateway
+      if svo.get_gateway_keyword() is not None
+          and svo.get_gateway_keyword() in conditional_keywords:
+        if parallel_gateway_started:
+          parallel_gateway_started = False
+        if not conditional_gateway_started:
+          order += 1
+          conditional_gateway_started = True
+          gateway_branch_index = 0
+        
+        # create pair of condition and action
+        if len(svos) > 0:
+          condition = svo
+          action, svos = get_head_from_list(svos)
+          
+          suffix = string.ascii_lowercase[gateway_branch_index]
+          add_conditional_gateway_branch(file, order, suffix, condition, action)
+          gateway_branch_index += 1
+        # if it's a last one SVO add it as a sequence flow
+        else:
+          order += 1
+          add_sequence_flow(file, order, svo)
+      
+      # check if this svo is a part of parallel gateway
+      elif svo.get_gateway_keyword() is not None
+          and svo.get_gateway_keyword() in parallel_keywords:
+        if conditional_gateway_started:
+          conditional_gateway_started = False
+        if not parallel_gateway_started:
+          order += 1
+          parallel_gateway_started = True
+          gateway_branch_index = 0
+      
+        suffix = string.ascii_lowercase[gateway_branch_index]
+        add_parallel_gateway_branch(file, order, suffix, svo)
+        gateway_branch_index += 1
+      
+        # Add second task in parallel
+        if len(svos) > 0:
+          svo, svos = get_head_from_list(svos)
+        
+          suffix = string.ascii_lowercase[gateway_branch_index]
+          add_parallel_gateway_branch(file, order, suffix, svo)
+          gateway_branch_index += 1
+        else:
+          order += 1
+          add_sequence_flow(file, order, svo)
+      
+      # check if this SVO is a default flow of gateway
+      elif svo.get_gateway_keyword() is not None
+          and svo.get_gateway_keyword() in default_flow_keywords:
+        # check if it is a default flow of conditional gateway
+        if conditional_gateway_started:
+          suffix = string.ascii_lowercase[gateway_branch_index]
+          add_default_flow_to_conditional_gateway(file, order, suffix, svo)
+          gateway_branch_index += 1
+        
+        # check if it is another flow of parallel gateway
+        elif parallel_gateway_started:
+          suffix = string.ascii_lowercase[gateway_branch_index]
+          add_parallel_gateway_branch(file, order, suffix, svo)
+          gateway_branch_index += 1
+      
+        # add it as a sequence flow
+        else:
+          if conditional_gateway_started:
+            conditional_gateway_started = False
+          if parallel_gateway_started:
+            parallel_gateway_started = False
+          gateway_branch_index = 0
+          order += 1
+          add_sequence_flow(file, order, svo)
+        
+      # add SVO as a task joined by sequence flow 
+      else:
+        if conditional_gateway_started:
+          # if conditional gateway has only one flow, add default flow which leads to end event
+          if gateway_branch_index < 2:
+            suffix = string.ascii_lowercase[gateway_branch_index]
+            add_default_flow_with_end_event(file, order, suffix)
+            order += 1
+          conditional_gateway_started = False
+          gateway_branch_index = 0
+        if parallel_gateway_started:
+          parallel_gateway_started = False
+          gateway_branch_index = 0
+        order += 1
+        add_sequence_flow(file, order, svo)
+      
+    if conditional_gateway_started and gateway_branch_index == 1:
+      suffix = string.ascii_lowercase[gateway_branch_index]
+      add_default_flow_pointing_to_end_event(file, order, suffix)
+    
+    order += 1
+    add_end_event(file, order)
+\end{lstlisting}

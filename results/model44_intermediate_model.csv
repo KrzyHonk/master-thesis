@@ -1,0 +1,8 @@
+Order,Activity,Condition,Who,Subprocess,Terminated
+0,start,,,,
+1,Tell Inq ,,Ec ,,
+2,Notify Ip ,,,,
+3a1,Confirm Changes ,Master Data can be changed ,Master Data ,,
+3b1,goto 5,else,,,
+4,Reject Changes ,,,,
+5,,,,,yes

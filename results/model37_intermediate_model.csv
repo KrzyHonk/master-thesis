@@ -1,0 +1,8 @@
+Order,Activity,Condition,Who,Subprocess,Terminated
+0,start,,,,
+1,Request Device Takeover Bid ,,,,
+2,Send Tender ,,,,
+3,Place Order ,,,,
+4,Confirm Order ,,,,
+5,Send Master Data ,,,,
+6,,,,,yes

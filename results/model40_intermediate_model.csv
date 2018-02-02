@@ -1,0 +1,10 @@
+Order,Activity,Condition,Who,Subprocess,Terminated
+0,start,,,,
+1,Verify Deregistration ,,,,
+2,Reject Deregistration ,,,,
+3,Confirm Deregistration ,,,,
+4,Assign Himself ,,,,
+5,Inform Mspo ,,,,
+6,Inform Mpo ,,,,
+7,Inform Sp ,,,,
+8,,,,,yes

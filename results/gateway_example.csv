@@ -1,0 +1,7 @@
+Order,Activity,Condition,Who,Subprocess,Terminated
+0,start,,,,
+1,Bring Defective Computer ,,Customer ,,
+2,Check Defect ,,Crs ,,
+3a1,Continue Process ,Costs are acceptable ,,,
+3b1,Take Her Computer Home ,else,,,
+4,,,,,yes

@@ -1,0 +1,9 @@
+Order,Activity,Condition,Who,Subprocess,Terminated
+0,start,,,,
+1,Start First ,,,,
+2,Place Order ,,,,
+3,Send Order ,,,,
+4,Process Order ,,Supplier ,,
+5,Send Invoice ,,Supplier ,,
+6,Receive Invoice ,,,,
+7,,,,,yes
